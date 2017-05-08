@@ -1,2 +1,2 @@
 # jgoodson2.github.io
-#### A sight to showcase my professional software development work.
+#### A site to showcase my professional software development work.
