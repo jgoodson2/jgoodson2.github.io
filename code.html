@@ -54,25 +54,58 @@
     </code>
 </p>
 
-<h4>Git auto-completion</h4>
+<h4>Git auto-completion and informative command prompt</h4>
+
 <p>
     First get the git-completion.bash script and put it in your home directory:<br>
 
     <code>curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o
         ~/.git-completion.bash</code><br>
 
-    Next, add the following lines to your .bash_profile. This tells bash to execute the git autocomplete script if it
-    exists.<br>
+    Next, add the following lines to ~/.bash_profile.<br>
+</p>
 
-    <code>if [ -f ~/.git-completion.bash ]; then<br>
-        . ~/.git-completion.bash<br>
-        fi<br></code>
-</p>
-<h4>Helpful command line prompt</h4>
-<p>Add this to <code>~/.bash_profile</code><br>
-    <code>export PS1='\[\e[36;1m\]\u\e[0m@\h \e[32;1m\W$(__git_ps1 " \[\e[38;44m\]%s")\e[0m $ '
-    </code>
-</p>
+<code>
+    function parse_git_dirty {<br>
+    status=`git status 2>&1 | tee`<br>
+    dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`<br>
+    untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`<br>
+    ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`<br>
+    newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`<br>
+    renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`<br>
+    deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`<br>
+    bits=''<br>
+    if [ "${renamed}" == "0" ]; then<br>
+    bits=">${bits}"<br>
+    fi<br>
+    if [ "${ahead}" == "0" ]; then<br>
+    bits="*${bits}"<br>
+    fi<br>
+    if [ "${newfile}" == "0" ]; then<br>
+    bits="+${bits}"<br>
+    fi<br>
+    if [ "${untracked}" == "0" ]; then<br>
+    bits="?${bits}"<br>
+    fi<br>
+    if [ "${deleted}" == "0" ]; then<br>
+    bits="x${bits}"<br>
+    fi<br>
+    if [ "${dirty}" == "0" ]; then<br>
+    bits="!${bits}"<br>
+    fi<br>
+    if [ ! "${bits}" == "" ]; then<br>
+    echo " ${bits}"<br>
+    else<br>
+    echo ""<br>
+    fi<br>
+    }<br>
+    <br>
+    export PS1="\[\033[38;5;81m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]@\[$(tput sgr0)\]\[\033[38;5;221m\]\h\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;85m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\] \[\033[38;5;228m\]\`parse_git_branch\`\[\033[38;5;9m\]\n--> \[$(tput sgr0)\]"<br>
+    <br>
+    if [ -f ~/.git-completion.bash ]; then<br>
+    . ~/.git-completion.bash<br>
+    fi<br><br>
+</code>
 
 </body>
 </html>
