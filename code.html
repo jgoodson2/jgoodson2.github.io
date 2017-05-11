@@ -58,7 +58,7 @@
          ~/.git-completion.bash</code><br>
          Next, add the following lines to ~/.bash_profile.<br>
       </p>
-      <pre>
+      <code>
 # get current branch in git repo<br>
 function parse_git_branch() {<br>
   BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`<br>
@@ -109,6 +109,6 @@ function parse_git_dirty {<br>
     if [ -f ~/.git-completion.bash ]; then<br>
     . ~/.git-completion.bash<br>
     fi<br><br>
-</pre>
+</code>
    </body>
 </html>
