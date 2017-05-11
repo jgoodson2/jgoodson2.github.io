@@ -60,13 +60,20 @@
 <p>
     First get the git-completion.bash script and put it in your home directory:<br>
 
-    <code>curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash</code><br>
+    <code>curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o
+        ~/.git-completion.bash</code><br>
 
-    Next, add the following lines to your .bash_profile. This tells bash to execute the git autocomplete script if it exists.<br>
+    Next, add the following lines to your .bash_profile. This tells bash to execute the git autocomplete script if it
+    exists.<br>
 
     <code>if [ -f ~/.git-completion.bash ]; then<br>
-    . ~/.git-completion.bash<br>
+        . ~/.git-completion.bash<br>
         fi<br></code>
+</p>
+<h4>Helpful command line prompt</h4>
+<p>Add this to <code>~/.bash_profile</code><br>
+    <code>export PS1='\[\e[36;1m\]\u\e[0m@\h \e[32;1m\W$(__git_ps1 " \[\e[38;44m\]%s")\e[0m $ '
+    </code>
 </p>
 
 </body>
