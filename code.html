@@ -1,114 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <title>jt goodson dot com</title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   </head>
-   <body>
-      <nav class="navbar navbar-inverse">
-         <div class="container-fluid">
-            <div class="navbar-header">
-               <a class="navbar-brand" href="#">jtgoodson.com</a>
-            </div>
-            <ul class="nav navbar-nav">
-               <li><a href="index.html">Home</a></li>
-               <li class="active"><a href="code.html">Code</a></li>
-               <li><a href="#">Page 2</a></li>
-               <li><a href="#">Page 3</a></li>
-            </ul>
-         </div>
-      </nav>
-      <h1>Code</h1>
-      <h3>Git</h3>
-      <h4>Some Git configurations that I like</h4>
-      <p>
-         <code>
-         git config --global user.name "jonathongoodson"<br>
-         git config --global user.email "goodson.jonathon@gmail.com"<br>
-         git config --global alias.a "add . --all"<br>
-         git config --global alias.c "commit -m"<br>
-         git config --global alias.cr "clone --recursive"<br>
-         git config --global alias.fu "fetch upstream"<br>
-         git config --global alias.go "checkout -b"<br>
-         git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %Cblue%an%Creset - %s %Cgreen(%cr)'"<br>
-         git config --global alias.mu "merge upstream/master"<br>
-         git config --global alias.pm "push -u origin master"<br>
-         git config --global alias.ppm "push -u origin +master"<br>
-         git config --global alias.p "push -u origin"<br>
-         git config --global alias.rao "remote add origin"<br>
-         git config --global alias.rau "remote add upstream"<br>
-         git config --global alias.rso "remote set-url origin"<br>
-         git config --global alias.rsu "remote set-url upstream"<br>
-         git config --global alias.ra "remote add"<br>
-         git config --global alias.rs "reset --soft HEAD~1"<br>
-         git config --global alias.s "status"<br>
-         git config --global alias.undo "reset --hard HEAD~1"<br>
-         git config --global ui.color "true"<br>
-         git config --global core.editor "vim"<br>
-         </code>
-      </p>
-      <h4>Git auto-completion and informative command prompt</h4>
-      <p>
-         First get the git-completion.bash script and put it in your home directory:<br>
-         <code>curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o
-         ~/.git-completion.bash</code><br>
-         Next, add the following lines to ~/.bash_profile.<br>
-      </p>
-      <code>
-# get current branch in git repo<br>
-function parse_git_branch() {<br>
-  BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`<br>
-  if [ ! "${BRANCH}" == "" ]<br>
-  then<br>
-      STAT=`parse_git_dirty`<br>
-      echo "[${BRANCH}${STAT}]"<br>
-  else<br>
-      echo ""<br>
-  fi<br>
-}<br><br>
+<head>
+    <title>jt goodson dot com</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">jtgoodson.com</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="index.html">Home</a></li>
+            <li class="active"><a href="code.html">Code</a></li>
+            <li><a href="#">Page 2</a></li>
+            <li><a href="#">Page 3</a></li>
+        </ul>
+    </div>
+</nav>
+<h1>Code</h1>
 
-function parse_git_dirty {<br>
-  status=`git status 2>&1 | tee`<br>
-  dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`<br>
-  untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`<br>
-  ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`<br>
-  newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`<br>
-  renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`<br>
-  deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`<br>
-  bits=''<br>
-  if [ "${renamed}" == "0" ]; then<br>
-    bits=">${bits}"<br>
-  fi<br>
-  if [ "${ahead}" == "0" ]; then<br>
-    bits="*${bits}"<br>
-  fi<br>
-  if [ "${newfile}" == "0" ]; then<br>
-    bits="+${bits}"<br>
-  fi<br>
-  if [ "${untracked}" == "0" ]; then<br>
-    bits="?${bits}"<br>
-  fi<br>
-  if [ "${deleted}" == "0" ]; then<br>
-    bits="x${bits}"<br>
-  fi<br>
-  if [ "${dirty}" == "0" ]; then<br>
-    bits="!${bits}"<br>
-  fi<br>
-  if [ ! "${bits}" == "" ]; then<br>
-    echo " ${bits}"<br>
-  else<br>
-    echo ""<br>
-  fi<br>
-}<br><br>
-    export PS1="\[\033[38;5;81m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]@\[$(tput sgr0)\]\[\033[38;5;221m\]\h\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;85m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\] \[\033[38;5;228m\]\`parse_git_branch\`\[\033[38;5;9m\]\n--> \[$(tput sgr0)\]"<br>
-    <br>
-    if [ -f ~/.git-completion.bash ]; then<br>
-    . ~/.git-completion.bash<br>
-    fi<br><br>
-</code>
-   </body>
+<button class="accordion">Git</button>
+<div class="panel">
+    <h4>Some Git configurations that I like</h4>
+    <p>
+        <code>
+            git config --global user.name "jonathongoodson"<br>
+            git config --global user.email "goodson.jonathon@gmail.com"<br>
+            git config --global alias.a "add . --all"<br>
+            git config --global alias.c "commit -m"<br>
+            git config --global alias.cr "clone --recursive"<br>
+            git config --global alias.fu "fetch upstream"<br>
+            git config --global alias.go "checkout -b"<br>
+            git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset
+            %Cblue%an%Creset - %s %Cgreen(%cr)'"<br>
+            git config --global alias.mu "merge upstream/master"<br>
+            git config --global alias.pm "push -u origin master"<br>
+            git config --global alias.ppm "push -u origin +master"<br>
+            git config --global alias.p "push -u origin"<br>
+            git config --global alias.rao "remote add origin"<br>
+            git config --global alias.rau "remote add upstream"<br>
+            git config --global alias.rso "remote set-url origin"<br>
+            git config --global alias.rsu "remote set-url upstream"<br>
+            git config --global alias.ra "remote add"<br>
+            git config --global alias.rs "reset --soft HEAD~1"<br>
+            git config --global alias.s "status"<br>
+            git config --global alias.undo "reset --hard HEAD~1"<br>
+            git config --global ui.color "true"<br>
+            git config --global core.editor "vim"<br>
+        </code>
+    </p>
+    <h4>Git auto-completion and informative command prompt</h4>
+    <p>
+        First get the git-completion.bash script and put it in your home directory:<br>
+        <code>curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o
+            ~/.git-completion.bash</code><br>
+        Next, add the following lines to ~/.bash_profile.<br>
+    </p>
+    <code>
+        # get current branch in git repo<br>
+        function parse_git_branch() {<br>
+        BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`<br>
+        if [ ! "${BRANCH}" == "" ]<br>
+        then<br>
+        STAT=`parse_git_dirty`<br>
+        echo "[${BRANCH}${STAT}]"<br>
+        else<br>
+        echo ""<br>
+        fi<br>
+        }<br><br>
+
+        function parse_git_dirty {<br>
+        status=`git status 2>&1 | tee`<br>
+        dirty=`echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?"`<br>
+        untracked=`echo -n "${status}" 2> /dev/null | grep "Untracked files" &> /dev/null; echo "$?"`<br>
+        ahead=`echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?"`<br>
+        newfile=`echo -n "${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?"`<br>
+        renamed=`echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?"`<br>
+        deleted=`echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?"`<br>
+        bits=''<br>
+        if [ "${renamed}" == "0" ]; then<br>
+        bits=">${bits}"<br>
+        fi<br>
+        if [ "${ahead}" == "0" ]; then<br>
+        bits="*${bits}"<br>
+        fi<br>
+        if [ "${newfile}" == "0" ]; then<br>
+        bits="+${bits}"<br>
+        fi<br>
+        if [ "${untracked}" == "0" ]; then<br>
+        bits="?${bits}"<br>
+        fi<br>
+        if [ "${deleted}" == "0" ]; then<br>
+        bits="x${bits}"<br>
+        fi<br>
+        if [ "${dirty}" == "0" ]; then<br>
+        bits="!${bits}"<br>
+        fi<br>
+        if [ ! "${bits}" == "" ]; then<br>
+        echo " ${bits}"<br>
+        else<br>
+        echo ""<br>
+        fi<br>
+        }<br><br>
+        export PS1="\[\033[38;5;81m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]@\[$(tput sgr0)\]\[\033[38;5;221m\]\h\[$(tput
+        sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;85m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]
+        \[\033[38;5;228m\]\`parse_git_branch\`\[\033[38;5;9m\]\n--> \[$(tput sgr0)\]"<br>
+        <br>
+        if [ -f ~/.git-completion.bash ]; then<br>
+        . ~/.git-completion.bash<br>
+        fi<br><br>
+    </code>
+</div>
+
+<button class="accordion">Section 2 - Under Construction</button>
+<div class="panel">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat.</p>
+</div>
+
+<button class="accordion">Section 3 - Under Construction</button>
+<div class="panel">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat.</p>
+</div>
+
+
+<script>
+  var acc = document.getElementsByClassName("accordion");
+  var i;
+
+  for (i = 0; i < acc.length; i++) {
+    acc[i].onclick = function () {
+      this.classList.toggle("active");
+      var panel = this.nextElementSibling;
+      if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      }
+    }
+  }
+</script>
+</body>
 </html>
