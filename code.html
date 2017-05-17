@@ -55,14 +55,18 @@
             git config --global core.editor "vim"<br>
         </code>
     </p>
-    <h4>Git auto-completion and informative command prompt</h4>
+    <h4>Git auto-completion</h4>
     <p>
         First get the git-completion.bash script and put it in your home directory:<br>
         <code>curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o
             ~/.git-completion.bash</code><br>
         Next, add the following lines to ~/.bash_profile.<br>
+        <code>if [ -f ~/.git-completion.bash ]; then<br>
+            . ~/.git-completion.bash<br>
+            fi</code><br>
     </p>
-    <code>
+    <h4>Informative command prompt</h4>
+    <p><code>
         # get current branch in git repo<br>
         function parse_git_branch() {<br>
         BRANCH=`git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'`<br>
@@ -111,11 +115,7 @@
         export PS1="\[\033[38;5;81m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\]@\[$(tput sgr0)\]\[\033[38;5;221m\]\h\[$(tput
         sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;85m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]
         \[\033[38;5;228m\]\`parse_git_branch\`\[\033[38;5;9m\]\n--> \[$(tput sgr0)\]"<br>
-        <br>
-        if [ -f ~/.git-completion.bash ]; then<br>
-        . ~/.git-completion.bash<br>
-        fi<br><br>
-    </code>
+    </code></p>
 </div>
 
 <button class="accordion">Section 2 - Under Construction</button>
@@ -134,20 +134,20 @@
 
 
 <script>
-  var acc = document.getElementsByClassName("accordion");
-  var i;
+    var acc = document.getElementsByClassName("accordion");
+    var i;
 
-  for (i = 0; i < acc.length; i++) {
-    acc[i].onclick = function () {
-      this.classList.toggle("active");
-      var panel = this.nextElementSibling;
-      if (panel.style.maxHeight) {
-        panel.style.maxHeight = null;
-      } else {
-        panel.style.maxHeight = panel.scrollHeight + "px";
-      }
+    for (i = 0; i < acc.length; i++) {
+        acc[i].onclick = function () {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        }
     }
-  }
 </script>
 </body>
 </html>
